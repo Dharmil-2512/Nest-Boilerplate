@@ -1,11 +1,23 @@
-import { BadRequestException, Module, ValidationError, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
 import { GlobalExceptionFilter } from './common/global-exception-filter';
 import { errorMessages } from './common/configs/messages.config';
+import { WinstonModule } from 'nest-winston';
+import { winstonOptions } from './common/configs/logger.config';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
-  imports: [],
+  imports: [WinstonModule.forRootAsync({ useFactory: () => winstonOptions() }), ScheduleModule.forRoot()],
   controllers: [],
   providers: [
     {
@@ -30,4 +42,8 @@ import { errorMessages } from './common/configs/messages.config';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(LoggerMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
