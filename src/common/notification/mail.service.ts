@@ -1,12 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { join } from 'path';
-import { renderFile } from 'ejs';
-import { CommonMailResponse, EmailData } from '../types';
-import { errorMessages } from '../configs/messages.config';
-import { Defaults } from '../configs/default.config';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
+import { renderFile } from 'ejs';
+import { join } from 'path';
+import { Defaults } from '../configs/default.config';
+import { errorMessages } from '../configs/messages.config';
+import { ICommonMailResponse, IEmailData } from '../types';
 /**
  *  Common Mail Service
  */
@@ -18,7 +17,7 @@ export class CommonMailService {
    */
   constructor(
     private mailerService: MailerService,
-    private configService: ConfigService,
+    private configService: ConfigService
   ) {}
 
   /**
@@ -26,7 +25,7 @@ export class CommonMailService {
    * @param emailData
    * @returns Common Mail response
    */
-  async checkEmail(emailData: EmailData): Promise<void> {
+  async checkEmail(emailData: IEmailData): Promise<void> {
     switch (emailData.subject) {
       case Defaults.FORGOT_PASSWORD_SUBJECT:
         await this.sendResetPasswordEmail(emailData);
@@ -46,8 +45,8 @@ export class CommonMailService {
    * @returns Common mail response
    */
   async sendResetPasswordEmail(
-    emailData: EmailData,
-  ): Promise<CommonMailResponse> {
+    emailData: IEmailData
+  ): Promise<ICommonMailResponse> {
     const ejsPath = join(__dirname, './templates/forgot-password.ejs');
     const template = await renderFile(ejsPath, {
       name: emailData.name,
@@ -73,8 +72,8 @@ export class CommonMailService {
    * @returns Common mail response
    */
   async sendVerificationEmail(
-    emailData: EmailData,
-  ): Promise<CommonMailResponse> {
+    emailData: IEmailData
+  ): Promise<ICommonMailResponse> {
     const ejsPath = join(__dirname, './templates/verify-user.ejs');
     const template = await renderFile(ejsPath, {
       name: emailData.name,
@@ -83,9 +82,9 @@ export class CommonMailService {
     });
 
     const sendEmailData = {
-      email: emailData.email,
+      to: emailData.email,
       subject: emailData.subject,
-      template: template,
+      html: template,
     };
 
     try {
@@ -101,12 +100,10 @@ export class CommonMailService {
    * @param sendEmailData
    * @returns Common mail response
    */
-  async sendEmail(sendEmailData: EmailData): Promise<CommonMailResponse> {
+  async sendEmail(sendEmailData: IEmailData): Promise<ICommonMailResponse> {
     return this.mailerService.sendMail({
       from: this.configService.get<string>('EMAIL_FROM'),
-      to: sendEmailData.email,
-      subject: sendEmailData.subject,
-      html: sendEmailData.template,
-    }) as Promise<CommonMailResponse>;
+      ...sendEmailData,
+    }) as Promise<ICommonMailResponse>;
   }
 }

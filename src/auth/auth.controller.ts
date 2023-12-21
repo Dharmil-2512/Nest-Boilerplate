@@ -29,7 +29,7 @@ export class AuthController {
    */
   @Post('verify-email')
   async verifyEmail(
-    @Body() verifyEmailDto: VerifyEmailDto,
+    @Body() verifyEmailDto: VerifyEmailDto
   ): OnlyMessageResponse {
     return this.authService.verifyEmail(verifyEmailDto.token);
   }
@@ -51,7 +51,7 @@ export class AuthController {
    */
   @Post('forgot-password')
   async forgotPassword(
-    @Body() forgotPasswordDto: ForgotPasswordDto,
+    @Body() forgotPasswordDto: ForgotPasswordDto
   ): OnlyMessageResponse {
     return this.authService.forgotPassword(forgotPasswordDto);
   }
@@ -63,7 +63,7 @@ export class AuthController {
    */
   @Post('reset-password')
   async resetPassword(
-    @Body() resetPasswordDto: ResetPasswordDto,
+    @Body() resetPasswordDto: ResetPasswordDto
   ): OnlyMessageResponse {
     return this.authService.resetPassword(resetPasswordDto);
   }

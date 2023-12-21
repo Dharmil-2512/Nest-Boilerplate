@@ -1,4 +1,6 @@
-export interface CommonResponse<T = any> {
+import { ISendMailOptions } from '@nestjs-modules/mailer';
+
+export interface ICommonResponse<T = any> {
   status: boolean;
   statusCode: number;
   message: string | string[];
@@ -6,9 +8,9 @@ export interface CommonResponse<T = any> {
   error: T | [];
 }
 
-export type OnlyMessageResponse = Promise<CommonResponse>;
+export type OnlyMessageResponse = Promise<ICommonResponse>;
 
-export interface CommonMailResponse {
+export interface ICommonMailResponse {
   accepted?: string[];
   rejected?: [];
   messageTime?: number;
@@ -16,19 +18,15 @@ export interface CommonMailResponse {
   response?: string;
 }
 
-export interface EmailData {
+export interface IEmailData extends ISendMailOptions {
   email?: string;
   password?: string;
   name?: string;
   subject?: string;
-  template?: string | Buffer;
-  from?: string;
-  to?: string;
-  html?: string | Buffer;
   redirectUrl?: string;
 }
 
-export interface JwtTokenPayload {
+export interface IJwtTokenPayload {
   _id: string;
   email: string;
 }

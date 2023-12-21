@@ -4,24 +4,15 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
-  Inject,
-  Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ResponseHandler } from '../utils/response-handler';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 /**
  * Global Exception Filter
  */
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
-  /**
-   * Description - Global Exception Filter Dependencies
-   * @param logger
-   */
-  constructor(@Inject(WINSTON_MODULE_PROVIDER) private logger: Logger) {}
-
   /**
    * Description - Catch Exception And Return Common Error Response
    * @param exception
@@ -30,12 +21,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
    */
   catch(exception: Error, host: ArgumentsHost): Response {
     const ctx = host.switchToHttp();
-    const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
 
-    this.logger.error(
-      `Error: method: ${request.method} - url :${request.url} - error : ${exception.stack}`,
-    );
     if (exception instanceof HttpException) {
       const statusCode = exception.getStatus();
       return response

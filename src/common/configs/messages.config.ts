@@ -13,8 +13,8 @@ export const errorMessages = {
   VERIFICATION_LINK_EXPIRED:
     'Email verification link is either invalid or expired',
   INCORRECT_DETAILS: 'Invalid email or password',
-  USER_NOT_REGISTERED:
-    'The email address is not associated with any account. Please check the email you entered or sign up for an account.',
+  USER_NOT_REGISTERED: `The email address is not associated with any account. Please check the email you entered 
+  or sign up for an account.`,
   EMAIL_NOT_VERIFIED:
     'Email not verified. Please verify your email before accessing your account',
   INVALID_TOKEN: 'Invalid token. Please provide a valid authentication token.',

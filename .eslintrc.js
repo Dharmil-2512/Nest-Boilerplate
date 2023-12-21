@@ -47,13 +47,18 @@ module.exports = {
       { selector: 'typeProperty', format: null },
       { selector: 'typeLike', format: ['StrictPascalCase'] },
       { selector: 'enumMember', format: ['UPPER_CASE'] },
+      {
+        selector: 'interface',
+        format: ['StrictPascalCase'],
+        prefix: ['I'],
+      },
     ],
     'no-useless-return': 'error',
     'no-constant-condition': 'warn',
     'max-len': [
       'error',
       {
-        code: 200,
+        code: 120,
       },
     ],
     'max-lines': [
@@ -70,9 +75,8 @@ module.exports = {
       },
     ],
     'no-console': 'error',
-    'no-mixed-operators': 'error',
     'keyword-spacing': 'error',
-    // 'multiline-ternary': ['error', 'never'],
+    'no-nested-ternary': 2,
     'no-undef': 'error',
     'no-whitespace-before-property': 'error',
     'nonblock-statement-body-position': 'error',

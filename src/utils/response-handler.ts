@@ -1,4 +1,4 @@
-import { CommonResponse } from '../common/types';
+import { ICommonResponse } from '../common/types';
 
 /**
  * Description -Response Handler Utility Function
@@ -15,7 +15,7 @@ export class ResponseHandler {
     data: T,
     message: string | string[],
     statusCode: number,
-  ): CommonResponse<T> {
+  ): ICommonResponse<T> {
     return {
       status: true,
       statusCode,
@@ -36,7 +36,7 @@ export class ResponseHandler {
     error: T,
     message: string | string[],
     statusCode: number,
-  ): CommonResponse<T> {
+  ): ICommonResponse<T> {
     return {
       status: false,
       statusCode,

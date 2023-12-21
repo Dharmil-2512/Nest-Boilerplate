@@ -27,14 +27,14 @@ import { UserService } from './user.service';
             'validatePassword',
             async function (
               this: UserDocument,
-              password: string,
+              password: string
             ): Promise<boolean> {
               const isPasswordValid = await commonService.comparePassword(
                 this.password,
-                password,
+                password
               );
               return isPasswordValid;
-            },
+            }
           );
           return schema;
         },

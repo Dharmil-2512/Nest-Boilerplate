@@ -38,5 +38,8 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# compodoc dependency
-documentation
+#Eslint Report
+/report
+
+#Package Json Lock
+/package-lock.json
