@@ -16,6 +16,7 @@ import { winstonOptions } from './common/configs/logger.config';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule } from '@nestjs/config';
+import { LogCleanerService } from './common/cron.service';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { ConfigModule } from '@nestjs/config';
         },
       }),
     },
+    LogCleanerService,
   ],
 })
 export class AppModule implements NestModule {
