@@ -1,4 +1,12 @@
-import { BadRequestException, Module, ValidationError, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
 import { GlobalExceptionFilter } from './common/global-exception-filter';
@@ -6,18 +14,26 @@ import { errorMessages } from './common/configs/messages.config';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+import { WinstonModule } from 'nest-winston';
+import { winstonOptions } from './common/configs/logger.config';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { CommonModule } from './common/common.module';
+import { LogCleanerService } from './common/cron.service';
 
 @Module({
   imports: [
+    WinstonModule.forRootAsync({ useFactory: () => winstonOptions() }),
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
+    ,
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -70,6 +86,11 @@ import { CommonModule } from './common/common.module';
         },
       }),
     },
+    LogCleanerService,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(LoggerMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
