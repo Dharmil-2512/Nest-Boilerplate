@@ -33,13 +33,10 @@ import { LogCleanerService } from './common/cron.service';
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    ,
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGO_URL'),
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
       }),
     }),
     MailerModule.forRootAsync({
