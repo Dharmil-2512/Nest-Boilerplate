@@ -5,8 +5,6 @@ import { LoginResponse, UserDetailModel } from 'src/user/user.types';
 import { LoginDto } from 'src/auth/dtos/login.dto';
 import { CommonResponsePromise } from 'src/common/common.types';
 import { ResetPasswordDto } from 'src/auth/dtos/reset-password.dto';
-import { RequestUser } from 'src/common/configs/decorators/request-user.decorator';
-import { User } from 'src/user/schemas/user.schema';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
 
 @Controller('auth')
