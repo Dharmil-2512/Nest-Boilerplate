@@ -16,6 +16,7 @@ import { Defaults } from 'src/common/defult.config';
 import { ResetPasswordDto } from 'src/auth/dtos/reset-password.dto';
 import { CommonMailService } from 'src/common/notification/mail.service';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -24,40 +25,37 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private commonService: CommonService,
     private commonMailService: CommonMailService,
+    private readonly configService: ConfigService,
   ) {}
 
-  async createUser(user: User, createUserDto: CreateUserDto): UserDetailModel {
-    const newPassword = this.commonService.generateToken(8);
-
+  async createUser(createUserDto: CreateUserDto): UserDetailModel {
     const addUser = {
       firstName: createUserDto.firstName,
       lastName: createUserDto.lastName,
       email: createUserDto.email,
-      password: await bcrypt.hash(newPassword, 10),
+      password: await bcrypt.hash(createUserDto.password, 10),
       resetPasswordToken: '',
       resetPasswordExpiryTime: '',
     };
 
     const createUser = await this.userModel.create(addUser);
 
-    await this.commonMailService.checkEmail({
-      firstName: createUser.firstName,
-      lastName: createUser.lastName,
-      email: createUser.email,
-      password: newPassword,
-      subject: Defaults.SEND_PASSWORD,
-      redirectUrl: Defaults.LOGIN_URL,
-    });
+    // await this.commonMailService.checkEmail({
+    //   firstName: createUser.firstName,
+    //   lastName: createUser.lastName,
+    //   email: createUser.email,
+    //   password: newPassword,
+    //   subject: Defaults.SEND_PASSWORD,
+    //   redirectUrl: Defaults.LOGIN_URL,
+    // });
     return ResponseHandler.success(createUser, successMessages.USER_ADDED, HttpStatus.OK);
   }
 
   async login(loginDto: LoginDto): LoginResponse {
     const user: User = await this.userModel.findOne({ email: loginDto.email }).lean();
-    if (!user) throw new NotFoundException('user not found ');
-
+    if (!user) throw new NotFoundException(errorMessages.USER_NOT_FOUND);
     const passwordMatch = await bcrypt.compare(loginDto.password, user.password);
-    if (!passwordMatch) throw new UnauthorizedException('Unauthorized');
-
+    if (!passwordMatch) throw new UnauthorizedException(errorMessages.INCORRECT_PASSWORD);
     const payload = {
       _id: user._id,
       email: user.email,
@@ -67,11 +65,11 @@ export class AuthService {
       {
         _id: user._id,
         email: user.email,
-        lastName: user.lastName,
         firstName: user.firstName,
-        token: this.jwtService.sign(payload),
+        lastName: user.lastName,
+        token: this.jwtService.sign(payload, { secret: this.configService.getOrThrow('SECRET_KEY'), expiresIn: '1d' }),
       },
-      'user login successfully',
+      successMessages.USER_LOGGED_IN,
       HttpStatus.OK,
     );
   }
@@ -100,7 +98,6 @@ export class AuthService {
       subject: Defaults.FORGOT_PASSWORD_SUBJECT,
       redirectUrl,
     });
-
     return ResponseHandler.success({}, successMessages.FORGOT_PASSWORD, HttpStatus.OK);
   }
 

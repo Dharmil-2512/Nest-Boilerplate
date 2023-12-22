@@ -5,7 +5,7 @@ import { Defaults } from '../defult.config';
 import { CommonMailResponse, EmailData } from '../common.types';
 import { MailerService } from '@nestjs-modules/mailer';
 import { errorMessages } from '../configs/messages.config';
-import ejs from 'ejs';
+import ejs, { renderFile } from 'ejs';
 
 /**
  *  Common Mail Service
@@ -72,7 +72,7 @@ export class CommonMailService {
   async sendResetPasswordEmail(emailData: EmailData): Promise<CommonMailResponse> {
     const ejsPath = join(__dirname, '../notification/templates/forgot-password.ejs');
 
-    const template = await ejs.renderFile(ejsPath, {
+    const template = await renderFile(ejsPath, {
       email: emailData.email,
       firstName: emailData.firstName,
       lastName: emailData.lastName,

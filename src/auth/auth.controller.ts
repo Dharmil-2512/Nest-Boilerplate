@@ -14,12 +14,12 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post()
-  async createUser(@RequestUser() user: User, createUserDto: CreateUserDto): UserDetailModel {
-    return this.authService.createUser(user, createUserDto);
+  async createUser(@Body() createUserDto: CreateUserDto): UserDetailModel {
+    return this.authService.createUser(createUserDto);
   }
 
-  @Post()
-  async login(loginDto: LoginDto): LoginResponse {
+  @Post('login')
+  async login(@Body() loginDto: LoginDto): LoginResponse {
     return this.authService.login(loginDto);
   }
 
