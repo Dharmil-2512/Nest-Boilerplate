@@ -1,4 +1,4 @@
-import { CommonResponse } from '../common/types';
+import { CommonResponse } from '../common/common.types';
 
 /**
  * Description -Response Handler Utility Function

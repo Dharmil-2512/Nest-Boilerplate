@@ -1,13 +1,16 @@
 import * as dotenv from 'dotenv';
 
 /**
- * Description - Get env file common function
- * @returns env file path
+ * Get Environment Function
+ * @returns Environment
  */
-const getEnvFile = (): string => `.env.${process.env.NODE_ENV}`;
+export const getEnvFile = (): string => `.env.${process.env.NODE_ENV}`;
 dotenv.config({ path: getEnvFile() });
-
+/**
+ * Description: Environments config variables
+ */
 export default {
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
+  MONGO_URL: process.env.MONGO_URL,
 };
