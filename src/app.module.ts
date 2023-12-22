@@ -3,9 +3,10 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
 import { GlobalExceptionFilter } from './common/global-exception-filter';
 import { errorMessages } from './common/configs/messages.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV}` })],
   controllers: [],
   providers: [
     {
