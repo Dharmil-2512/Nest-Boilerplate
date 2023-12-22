@@ -15,9 +15,14 @@ import { WinstonModule } from 'nest-winston';
 import { winstonOptions } from './common/configs/logger.config';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [WinstonModule.forRootAsync({ useFactory: () => winstonOptions() }), ScheduleModule.forRoot()],
+  imports: [
+    WinstonModule.forRootAsync({ useFactory: () => winstonOptions() }),
+    ScheduleModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV}` }),
+  ],
   controllers: [],
   providers: [
     {
