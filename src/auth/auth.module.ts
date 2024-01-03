@@ -1,16 +1,27 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Schema } from 'mongoose';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { ConfigService } from '@nestjs/config';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { CommonModule } from 'src/common/common.module';
-import { UserModule } from 'src/user/user.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/user/schemas/user.schema';
+import { EmailVerify, emailVerifySchema } from './schemas/email-verify.schema';
+import { CommonModule } from '../common/common.module';
+import { UserModule } from '../user/user.module';
+import { ForgotPassword, forgotPasswordSchema } from './schemas/forgot-password.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: EmailVerify.name,
+        useFactory: (): Schema<EmailVerify> => emailVerifySchema,
+      },
+      {
+        name: ForgotPassword.name,
+        useFactory: (): Schema<ForgotPassword> => forgotPasswordSchema,
+      },
+    ]),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -22,6 +33,6 @@ import { User, UserSchema } from 'src/user/schemas/user.schema';
     CommonModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtService],
+  providers: [AuthService],
 })
 export class AuthModule {}

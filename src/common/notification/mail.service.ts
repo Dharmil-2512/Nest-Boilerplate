@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { join } from 'path';
-
-import { Defaults } from '../defult.config';
-import { CommonMailResponse, EmailData } from '../common.types';
 import { MailerService } from '@nestjs-modules/mailer';
+import { join } from 'path';
+import { renderFile } from 'ejs';
+import { CommonMailResponse, EmailData } from '../common.types';
 import { errorMessages } from '../configs/messages.config';
-import ejs, { renderFile } from 'ejs';
+import { Defaults } from '../configs/default.config';
+import { ConfigService } from '@nestjs/config';
 
 /**
  *  Common Mail Service
@@ -16,67 +16,38 @@ export class CommonMailService {
    * Mail Service Dependency
    * @param mailerService
    */
-  constructor(private mailerService: MailerService) {}
+  constructor(
+    private mailerService: MailerService,
+    private configService: ConfigService,
+  ) {}
 
   /**
    * Check specific email common function
    * @param emailData
    * @returns Common Mail response
    */
-  async checkEmail(emailData: EmailData): Promise<CommonMailResponse> {
+  async checkEmail(emailData: EmailData): Promise<void> {
     switch (emailData.subject) {
       case Defaults.FORGOT_PASSWORD_SUBJECT:
-        return this.sendResetPasswordEmail(emailData);
-      case Defaults.SEND_PASSWORD:
-        return this.sendPasswordEmail(emailData);
+        await this.sendResetPasswordEmail(emailData);
+        break;
+      case Defaults.VERIFY_USER_SUBJECT:
+        await this.sendVerificationEmail(emailData);
+        break;
       default:
         throw new BadRequestException({ message: errorMessages.INVALID_SUBJECT });
     }
   }
-
   /**
-   * Send password email function
+   * Description - Send reset password email function
    * @param emailData
-   * @returns
-   */
-
-  async sendPasswordEmail(emailData: EmailData): Promise<CommonMailResponse> {
-    const ejsPath = join(__dirname, '../notification/templates/send-password.ejs');
-
-    const template = await ejs.renderFile(ejsPath, {
-      email: emailData.email,
-      firstName: emailData.firstName,
-      lastName: emailData.lastName,
-      password: emailData.password,
-      redirectUrl: emailData.redirectUrl,
-    });
-
-    const sendEmailData = {
-      email: emailData.email,
-      subject: emailData.subject,
-      template: template,
-    };
-    try {
-      const email = this.sendEmail(sendEmailData);
-      return email;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
-  }
-
-  /**
-   * Send reset password email function
-   * @param emailData
-   * @returns
+   * @returns Common mail response
    */
   async sendResetPasswordEmail(emailData: EmailData): Promise<CommonMailResponse> {
-    const ejsPath = join(__dirname, '../notification/templates/forgot-password.ejs');
-
+    const ejsPath = join(__dirname, './templates/forgot-password.ejs');
     const template = await renderFile(ejsPath, {
+      name: emailData.name,
       email: emailData.email,
-      firstName: emailData.firstName,
-      lastName: emailData.lastName,
-      password: emailData.password,
       redirectUrl: emailData.redirectUrl,
     });
     const sendEmailData = {
@@ -85,7 +56,7 @@ export class CommonMailService {
       template: template,
     };
     try {
-      const email = this.sendEmail(sendEmailData);
+      const email = await this.sendEmail(sendEmailData);
       return email;
     } catch (error) {
       throw new BadRequestException(error);
@@ -93,16 +64,43 @@ export class CommonMailService {
   }
 
   /**
-   * Send Email function
+   * Description - Send verification email function
+   * @param emailData
+   * @returns Common mail response
+   */
+  async sendVerificationEmail(emailData: EmailData): Promise<CommonMailResponse> {
+    const ejsPath = join(__dirname, './templates/verify-user.ejs');
+    const template = await renderFile(ejsPath, {
+      name: emailData.name,
+      email: emailData.email,
+      redirectUrl: emailData.redirectUrl,
+    });
+
+    const sendEmailData = {
+      email: emailData.email,
+      subject: emailData.subject,
+      template: template,
+    };
+
+    try {
+      const email = await this.sendEmail(sendEmailData);
+      return email;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  /**
+   * Description - Send Email function
    * @param sendEmailData
    * @returns Common mail response
    */
-  sendEmail(sendEmailData: EmailData): CommonMailResponse {
+  async sendEmail(sendEmailData: EmailData): Promise<CommonMailResponse> {
     return this.mailerService.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: this.configService.get<string>('EMAIL_FROM'),
       to: sendEmailData.email,
       subject: sendEmailData.subject,
       html: sendEmailData.template,
-    }) as CommonMailResponse;
+    }) as Promise<CommonMailResponse>;
   }
 }

@@ -6,7 +6,7 @@ export interface CommonResponse<T = any> {
   error: T | [];
 }
 
-export type CommonResponsePromise = Promise<CommonResponse>;
+export type OnlyMessageResponse = Promise<CommonResponse>;
 
 export interface CommonMailResponse {
   accepted?: string[];
@@ -17,17 +17,13 @@ export interface CommonMailResponse {
 }
 
 export interface EmailData {
-  firstName?: string;
-  lastName?: string;
   email?: string;
   password?: string;
-  userName?: string;
+  name?: string;
   subject?: string;
-  text?: string;
-  template?: string;
+  template?: string | Buffer;
   from?: string;
   to?: string;
   html?: string | Buffer;
   redirectUrl?: string;
-  data?: { receiverEmail: string };
 }

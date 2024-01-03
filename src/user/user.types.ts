@@ -1,5 +1,6 @@
-import { Types } from 'mongoose';
-import { CommonResponse } from 'src/common/common.types';
+import { FilterQuery, Types } from 'mongoose';
+import { UserDocument } from './schemas/user.schema';
+import { CommonResponse } from '../common/common.types';
 
 export interface UserDetailResponseData {
   email: string;
@@ -14,7 +15,9 @@ export interface LoginData {
   email: string;
   lastName: string;
   firstName: string;
-  token: string;
+  accessToken: string;
 }
 
 export type LoginResponse = Promise<CommonResponse<LoginData>>;
+
+export type UserQueryObject = Partial<FilterQuery<UserDocument>>;
