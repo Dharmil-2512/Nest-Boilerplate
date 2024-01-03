@@ -1,6 +1,6 @@
 import { FilterQuery, Types } from 'mongoose';
 import { UserDocument } from './schemas/user.schema';
-import { CommonResponse } from '../common/common.types';
+import { CommonResponse } from '../common/types';
 
 export interface UserDetailResponseData {
   email: string;

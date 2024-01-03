@@ -3,8 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, UpdateQuery, UpdateWriteOpResult } from 'mongoose';
 import { CreateUserDto } from '../auth/dtos/create.user.dto';
 import { User, UserDocument } from './schemas/user.schema';
-import { UserQueryObject } from './user.types';
+import { UserQueryObject } from './types';
 
+/**
+ * Description - User service
+ */
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}

@@ -1,7 +1,7 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { Response } from 'express';
-import { CommonResponse } from '../common.types';
+import { CommonResponse } from '../types';
 
 /**
  * Description - Response Interceptor provider

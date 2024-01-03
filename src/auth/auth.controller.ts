@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
-import { OnlyMessageResponse } from '../common/common.types';
+import { OnlyMessageResponse } from '../common/types';
 import { VerifyEmailDto } from './dtos/email-verify.dto';
 import { UserLoginDto } from './dtos/login.dto';
 import { CreateUserDto } from './dtos/create.user.dto';
-import { LoginResponse } from '../user/user.types';
+import { LoginResponse } from '../user/types';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 
 @Controller('auth')

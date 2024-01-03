@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { renderFile } from 'ejs';
-import { CommonMailResponse, EmailData } from '../common.types';
+import { CommonMailResponse, EmailData } from '../types';
 import { errorMessages } from '../configs/messages.config';
 import { Defaults } from '../configs/default.config';
 import { ConfigService } from '@nestjs/config';
