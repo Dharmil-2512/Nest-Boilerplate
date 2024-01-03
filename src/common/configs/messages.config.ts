@@ -13,6 +13,8 @@ export const errorMessages = {
   USER_NOT_REGISTERED:
     'The email address is not associated with any account. Please check the email you entered or sign up for an account.',
   EMAIL_NOT_VERIFIED: 'Email not verified. Please verify your email before accessing your account',
+  INVALID_TOKEN: 'Invalid token. Please provide a valid authentication token.',
+  USER_UNAUTHORIZED: 'Your session has expired. Please log in again.',
 };
 
 /**

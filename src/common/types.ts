@@ -27,3 +27,8 @@ export interface EmailData {
   html?: string | Buffer;
   redirectUrl?: string;
 }
+
+export interface JwtTokenPayload {
+  _id: string;
+  email: string;
+}
