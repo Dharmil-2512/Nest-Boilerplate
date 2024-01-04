@@ -10,14 +10,18 @@ import { UserQueryObject } from './types';
  */
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+  ) {}
 
   /**
    * Description - Create User common function
    * @param createUserDto CreateUserDto
    * @returns User
    */
-  async createUser(userData: Partial<CreateUserDto>): Promise<Partial<UserDocument>> {
+  async createUser(
+    userData: Partial<CreateUserDto>,
+  ): Promise<Partial<UserDocument>> {
     return this.userModel.create(userData);
   }
 
@@ -26,9 +30,14 @@ export class UserService {
    * @param query UserQueryObject
    * @returns User
    */
-  async getUser(query: UserQueryObject, shouldGetPassword = false): Promise<UserDocument> {
+  async getUser(
+    query: UserQueryObject,
+    shouldGetPassword = false,
+  ): Promise<UserDocument> {
     const queryBuilder = this.userModel.findOne(query);
-    return shouldGetPassword ? queryBuilder.select('+password') : queryBuilder.exec();
+    return shouldGetPassword
+      ? queryBuilder.select('+password')
+      : queryBuilder.exec();
   }
 
   /**
@@ -36,7 +45,10 @@ export class UserService {
    * @param query UserQueryObject
    * @returns User
    */
-  async getUserJson(query: UserQueryObject, select: object = {}): Promise<UserDocument> {
+  async getUserJson(
+    query: UserQueryObject,
+    select: object = {},
+  ): Promise<UserDocument> {
     return this.userModel.findOne(query, select).lean();
   }
 

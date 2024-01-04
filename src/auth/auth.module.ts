@@ -8,7 +8,10 @@ import { AuthController } from './auth.controller';
 import { EmailVerify, emailVerifySchema } from './schemas/email-verify.schema';
 import { CommonModule } from '../common/common.module';
 import { UserModule } from '../user/user.module';
-import { ForgotPassword, forgotPasswordSchema } from './schemas/forgot-password.schema';
+import {
+  ForgotPassword,
+  forgotPasswordSchema,
+} from './schemas/forgot-password.schema';
 
 @Module({
   imports: [
@@ -26,7 +29,9 @@ import { ForgotPassword, forgotPasswordSchema } from './schemas/forgot-password.
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('SECRET_KEY'),
-        signOptions: { expiresIn: configService.get<string>('TOKEN_EXPIRATION') },
+        signOptions: {
+          expiresIn: configService.get<string>('TOKEN_EXPIRATION'),
+        },
       }),
     }),
     UserModule,

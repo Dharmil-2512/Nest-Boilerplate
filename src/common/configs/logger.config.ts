@@ -18,9 +18,15 @@ export const winstonOptions = (): WinstonModuleOptions => {
   return {
     exitOnError: false,
     level: 'debug',
-    format: winston.format.combine(winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), winston.format.json()),
+    format: winston.format.combine(
+      winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+      winston.format.json(),
+    ),
     transports: [
-      new winston.transports.File({ filename: Defaults.COMBINED_LOG_PATH, maxsize: 1048576 }),
+      new winston.transports.File({
+        filename: Defaults.COMBINED_LOG_PATH,
+        maxsize: 1048576,
+      }),
       new winston.transports.File({
         filename: Defaults.ERROR_LOG_PATH,
         level: 'error',
@@ -31,7 +37,10 @@ export const winstonOptions = (): WinstonModuleOptions => {
         format: winston.format.combine(
           winston.format.colorize(),
           winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-          utilities.format.nestLike('Tavelio', { colors: true, prettyPrint: false }),
+          utilities.format.nestLike('Tavelio', {
+            colors: true,
+            prettyPrint: false,
+          }),
         ),
       }),
     ],

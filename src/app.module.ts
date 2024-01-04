@@ -1,3 +1,5 @@
+import { MailerModule } from '@nestjs-modules/mailer';
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import {
   BadRequestException,
   MiddlewareConsumer,
@@ -7,23 +9,21 @@ import {
   ValidationError,
   ValidationPipe,
 } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
-import { GlobalExceptionFilter } from './common/global-exception-filter';
-import { errorMessages } from './common/configs/messages.config';
-import { AuthModule } from './auth/auth.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
-import { WinstonModule } from 'nest-winston';
-import { winstonOptions } from './common/configs/logger.config';
-import { LoggerMiddleware } from './middlewares/logger.middleware';
-import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from './user/user.module';
-import { MailerModule } from '@nestjs-modules/mailer';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ScheduleModule } from '@nestjs/schedule';
+import { WinstonModule } from 'nest-winston';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
+import { winstonOptions } from './common/configs/logger.config';
+import { errorMessages } from './common/configs/messages.config';
 import { LogCleanerService } from './common/cron.service';
+import { GlobalExceptionFilter } from './common/global-exception-filter';
+import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -75,10 +75,13 @@ import { LogCleanerService } from './common/cron.service';
       provide: APP_PIPE,
       useValue: new ValidationPipe({
         whitelist: true,
-        exceptionFactory: (validationErrors: ValidationError[] = []): BadRequestException => {
+        exceptionFactory: (
+          validationErrors: ValidationError[] = [],
+        ): BadRequestException => {
           const errorKey = Object.keys(validationErrors[0].constraints)[0];
           return new BadRequestException(
-            validationErrors[0].constraints[`${errorKey}`] || errorMessages.UNEXPECTED_ERROR,
+            validationErrors[0].constraints[`${errorKey}`] ||
+              errorMessages.UNEXPECTED_ERROR,
           );
         },
       }),
@@ -88,6 +91,8 @@ import { LogCleanerService } from './common/cron.service';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(LoggerMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL });
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }

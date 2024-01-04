@@ -9,7 +9,8 @@ export const Defaults = {
   TOKEN_EXPIRY_TIME: 24,
   FORGOT_PASSWORD_SUBJECT: 'Reset Password Request',
   REDIRECT_URL_PATH: 'http://localhost:5000/api/auth/reset-password/',
-  PASSWORD_CHARS: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
+  PASSWORD_CHARS:
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
   SALT_ROUND: 10,
   RESET_TOKEN_EXPIRY: '1m',
   EMAIL_VERIFICATION_TOKEN_EXPIRY: '2m',

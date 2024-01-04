@@ -1,14 +1,12 @@
 {
-  "prettier.tabWidth": 4,
-  "prettier.printWidth": 120,
-  "prettier.endOfLine": "auto",
-  "prettier.semi": true,
-  "editor.tabSize": 4,
-  "editor.fontSize": 14,
   "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.productIconTheme": "material-product-icons",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.format": "explicit",
+    "source.organizeImports": "explicit"
+  },
   "workbench.colorCustomizations": {
     "activityBar.background": "#1C2341",
     "activityBar.activeBorder": "#506C9F",
@@ -29,5 +27,5 @@
     "statusBarItem.remoteBackground": "#1C2341",
     "statusBarItem.remoteForeground": "#FFFFFF"
   },
-  "editor.fontLigatures": false
+  "files.eol": "\n"
 }

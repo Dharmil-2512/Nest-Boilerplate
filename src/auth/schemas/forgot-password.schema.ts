@@ -23,5 +23,6 @@ export class ForgotPassword {
   updatedAt: Date;
 }
 
-export const forgotPasswordSchema = SchemaFactory.createForClass(ForgotPassword);
+export const forgotPasswordSchema =
+  SchemaFactory.createForClass(ForgotPassword);
 export type ForgotPasswordDocument = HydratedDocument<ForgotPassword>;

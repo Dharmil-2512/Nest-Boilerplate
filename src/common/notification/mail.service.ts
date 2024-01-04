@@ -35,7 +35,9 @@ export class CommonMailService {
         await this.sendVerificationEmail(emailData);
         break;
       default:
-        throw new BadRequestException({ message: errorMessages.INVALID_SUBJECT });
+        throw new BadRequestException({
+          message: errorMessages.INVALID_SUBJECT,
+        });
     }
   }
   /**
@@ -43,7 +45,9 @@ export class CommonMailService {
    * @param emailData
    * @returns Common mail response
    */
-  async sendResetPasswordEmail(emailData: EmailData): Promise<CommonMailResponse> {
+  async sendResetPasswordEmail(
+    emailData: EmailData,
+  ): Promise<CommonMailResponse> {
     const ejsPath = join(__dirname, './templates/forgot-password.ejs');
     const template = await renderFile(ejsPath, {
       name: emailData.name,
@@ -68,7 +72,9 @@ export class CommonMailService {
    * @param emailData
    * @returns Common mail response
    */
-  async sendVerificationEmail(emailData: EmailData): Promise<CommonMailResponse> {
+  async sendVerificationEmail(
+    emailData: EmailData,
+  ): Promise<CommonMailResponse> {
     const ejsPath = join(__dirname, './templates/verify-user.ejs');
     const template = await renderFile(ejsPath, {
       name: emailData.name,

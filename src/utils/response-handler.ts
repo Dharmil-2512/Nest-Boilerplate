@@ -11,7 +11,11 @@ export class ResponseHandler {
    * @param statusCode
    * @returns
    */
-  public static success<T>(data: T, message: string | string[], statusCode: number): CommonResponse<T> {
+  public static success<T>(
+    data: T,
+    message: string | string[],
+    statusCode: number,
+  ): CommonResponse<T> {
     return {
       status: true,
       statusCode,
@@ -28,7 +32,11 @@ export class ResponseHandler {
    * @param statusCode
    * @returns
    */
-  public static error<T>(error: T, message: string | string[], statusCode: number): CommonResponse<T> {
+  public static error<T>(
+    error: T,
+    message: string | string[],
+    statusCode: number,
+  ): CommonResponse<T> {
     return {
       status: false,
       statusCode,

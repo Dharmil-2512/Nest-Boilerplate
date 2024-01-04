@@ -1,4 +1,12 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Logger,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { ResponseHandler } from '../utils/response-handler';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
@@ -25,13 +33,25 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
 
-    this.logger.error(`Error: method: ${request.method} - url :${request.url} - error : ${exception.stack}`);
+    this.logger.error(
+      `Error: method: ${request.method} - url :${request.url} - error : ${exception.stack}`,
+    );
     if (exception instanceof HttpException) {
       const statusCode = exception.getStatus();
-      return response.status(statusCode).json(ResponseHandler.error(exception.name, exception.message, statusCode));
+      return response
+        .status(statusCode)
+        .json(
+          ResponseHandler.error(exception.name, exception.message, statusCode),
+        );
     }
     return response
       .status(HttpStatus.BAD_REQUEST)
-      .json(ResponseHandler.error(exception.name, exception.message, HttpStatus.BAD_REQUEST));
+      .json(
+        ResponseHandler.error(
+          exception.name,
+          exception.message,
+          HttpStatus.BAD_REQUEST,
+        ),
+      );
   }
 }

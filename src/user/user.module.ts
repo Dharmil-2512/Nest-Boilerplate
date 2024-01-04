@@ -23,10 +23,19 @@ import { CommonModule } from '../common/common.module';
             this.password = await commonService.hashPassword(this.password);
             return next();
           });
-          schema.method('validatePassword', async function (this: UserDocument, password: string): Promise<boolean> {
-            const isPasswordValid = await commonService.comparePassword(this.password, password);
-            return isPasswordValid;
-          });
+          schema.method(
+            'validatePassword',
+            async function (
+              this: UserDocument,
+              password: string,
+            ): Promise<boolean> {
+              const isPasswordValid = await commonService.comparePassword(
+                this.password,
+                password,
+              );
+              return isPasswordValid;
+            },
+          );
           return schema;
         },
         inject: [CommonService],

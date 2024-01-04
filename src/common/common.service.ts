@@ -12,7 +12,8 @@ export class CommonService {
    */
   public generateToken(length: number): string {
     let result = '';
-    const char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const char =
+      '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     for (let i = 0; i < length; i++) {
       result += char.charAt(Math.floor(Math.random() * char.length));
     }
@@ -57,7 +58,10 @@ export class CommonService {
    * @param userPassword string
    * @returns True | False
    */
-  public async comparePassword(password: string, userPassword: string): Promise<boolean> {
+  public async comparePassword(
+    password: string,
+    userPassword: string,
+  ): Promise<boolean> {
     return compare(userPassword, password);
   }
 }

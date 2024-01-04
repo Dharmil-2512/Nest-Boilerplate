@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { ForgotPasswordDto } from './dtos/forgot-password.dto';
 import { OnlyMessageResponse } from '../common/types';
-import { VerifyEmailDto } from './dtos/email-verify.dto';
-import { UserLoginDto } from './dtos/login.dto';
-import { CreateUserDto } from './dtos/create.user.dto';
 import { LoginResponse } from '../user/types';
+import { AuthService } from './auth.service';
+import { CreateUserDto } from './dtos/create.user.dto';
+import { VerifyEmailDto } from './dtos/email-verify.dto';
+import { ForgotPasswordDto } from './dtos/forgot-password.dto';
+import { UserLoginDto } from './dtos/login.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 
 @Controller('auth')
@@ -28,7 +28,9 @@ export class AuthController {
    * @returns Common success | error response
    */
   @Post('verify-email')
-  async verifyEmail(@Body() verifyEmailDto: VerifyEmailDto): OnlyMessageResponse {
+  async verifyEmail(
+    @Body() verifyEmailDto: VerifyEmailDto,
+  ): OnlyMessageResponse {
     return this.authService.verifyEmail(verifyEmailDto.token);
   }
 
@@ -48,7 +50,9 @@ export class AuthController {
    * @returns Common success | error response
    */
   @Post('forgot-password')
-  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto): OnlyMessageResponse {
+  async forgotPassword(
+    @Body() forgotPasswordDto: ForgotPasswordDto,
+  ): OnlyMessageResponse {
     return this.authService.forgotPassword(forgotPasswordDto);
   }
 
@@ -58,7 +62,9 @@ export class AuthController {
    * @returns Common success | error response
    */
   @Post('reset-password')
-  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto): OnlyMessageResponse {
+  async resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ): OnlyMessageResponse {
     return this.authService.resetPassword(resetPasswordDto);
   }
 }

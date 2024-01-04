@@ -1,4 +1,9 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { Response } from 'express';
 import { CommonResponse } from '../types';
@@ -14,7 +19,10 @@ export class ResponseInterceptorService implements NestInterceptor {
    * @param next
    * @returns Common Response
    */
-  intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler<any>,
+  ): Observable<any> | Promise<Observable<any>> {
     const response = context.switchToHttp().getResponse<Response>();
 
     return next.handle().pipe(

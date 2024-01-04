@@ -1,5 +1,8 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { fieldInvalid, fieldRequired } from '../../common/configs/messages.config';
+import {
+  fieldInvalid,
+  fieldRequired,
+} from '../../common/configs/messages.config';
 import { Transform } from 'class-transformer';
 
 export class UserLoginDto {

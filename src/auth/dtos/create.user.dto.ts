@@ -1,13 +1,22 @@
-import { IsAlpha, IsDate, IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
-import { DateTime } from 'luxon';
 import { Transform } from 'class-transformer';
+import {
+  IsAlpha,
+  IsDate,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { DateTime } from 'luxon';
 import { Defaults } from '../../common/configs/default.config';
 import {
-  minimumLength,
-  maximumLength,
-  validationMessages,
-  fieldRequired,
   fieldInvalid,
+  fieldRequired,
+  maximumLength,
+  minimumLength,
+  validationMessages,
 } from '../../common/configs/messages.config';
 
 export class CreateUserDto {
@@ -43,7 +52,9 @@ export class CreateUserDto {
 
   @IsNotEmpty({ message: fieldRequired('Date of birth') })
   @Transform(({ value }): Date => {
-    return typeof value === 'string' ? DateTime.fromISO(value).toJSDate() : value;
+    return typeof value === 'string'
+      ? DateTime.fromISO(value).toJSDate()
+      : value;
   })
   @IsDate()
   dob: Date;
