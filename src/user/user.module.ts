@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
+import { Global, Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { JwtService } from '@nestjs/jwt';
 import { Schema } from 'mongoose';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
-import { User, UserDocument, userSchema } from './schemas/user.schema';
-import { CommonService } from '../common/common.service';
 import { CommonModule } from '../common/common.module';
+import { CommonService } from '../common/common.service';
+import { User, UserDocument, userSchema } from './schemas/user.schema';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeatureAsync([
@@ -41,10 +41,10 @@ import { CommonModule } from '../common/common.module';
         inject: [CommonService],
       },
     ]),
-    CommonModule,
+    forwardRef(() => CommonModule),
   ],
   controllers: [UserController],
-  providers: [UserService, JwtService],
+  providers: [UserService],
   exports: [UserService],
 })
 export class UserModule {}

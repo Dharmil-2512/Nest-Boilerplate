@@ -7,6 +7,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
@@ -48,6 +49,7 @@ export class AuthService {
     private readonly userService: UserService,
     private commonService: CommonService,
     private commonMailService: CommonMailService,
+    private configService: ConfigService,
   ) {}
 
   /**
@@ -144,7 +146,9 @@ export class AuthService {
       email: user.email,
     };
 
-    const accessToken = await this.jwtService.signAsync(payload);
+    const accessToken = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('SECRET_KEY'),
+    });
 
     return ResponseHandler.success(
       {
