@@ -1,0 +1,6 @@
+projectKey=nest-boilerplate
+serverUrl=http://localhost:9000
+serverVersion=10.4.0.87286
+dashboardUrl=http://localhost:9000/dashboard?id=nest-boilerplate
+ceTaskId=c8fe2d37-c668-4e4d-ac9b-b1c23faa34b2
+ceTaskUrl=http://localhost:9000/api/ce/task?id=c8fe2d37-c668-4e4d-ac9b-b1c23faa34b2

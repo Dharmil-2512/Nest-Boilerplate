@@ -19,6 +19,7 @@ export const errorMessages = {
     'Email not verified. Please verify your email before accessing your account',
   INVALID_TOKEN: 'Invalid token. Please provide a valid authentication token.',
   USER_UNAUTHORIZED: 'Your session has expired. Please log in again.',
+  UPLOAD_FAILED: 'file upload fail.',
 };
 
 /**
@@ -31,6 +32,7 @@ export const successMessages = {
   EMAIL_VERIFIED:
     'Email verified successfully. You can now access your account.',
   FORGOT_PASSWORD: 'Please check your email for the password reset link.',
+  IMAGE_UPLOADED: 'Image Uploaded Successfully',
 };
 
 /**
