@@ -1,4 +1,4 @@
-export interface CommonResponse<T = any> {
+export interface ICommonResponse<T = any> {
   status: boolean;
   statusCode: number;
   message: string | string[];
@@ -6,9 +6,9 @@ export interface CommonResponse<T = any> {
   error: T | [];
 }
 
-export type OnlyMessageResponse = Promise<CommonResponse>;
+export type OnlyMessageResponse = Promise<ICommonResponse>;
 
-export interface CommonMailResponse {
+export interface ICommonMailResponse {
   accepted?: string[];
   rejected?: [];
   messageTime?: number;
@@ -16,7 +16,7 @@ export interface CommonMailResponse {
   response?: string;
 }
 
-export interface EmailData {
+export interface IEmailData {
   email?: string;
   password?: string;
   name?: string;
@@ -28,7 +28,7 @@ export interface EmailData {
   redirectUrl?: string;
 }
 
-export interface JwtTokenPayload {
+export interface IJwtTokenPayload {
   _id: string;
   email: string;
 }

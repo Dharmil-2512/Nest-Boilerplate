@@ -49,7 +49,7 @@ export class AuthService {
     private readonly userService: UserService,
     private commonService: CommonService,
     private commonMailService: CommonMailService,
-    private configService: ConfigService,
+    private configService: ConfigService
   ) {}
 
   /**
@@ -87,7 +87,7 @@ export class AuthService {
     return ResponseHandler.success(
       [],
       successMessages.USER_ADDED,
-      HttpStatus.OK,
+      HttpStatus.OK
     );
   }
 
@@ -106,7 +106,7 @@ export class AuthService {
 
     await this.userService.updateUser(
       { _id: idToken.userId },
-      { emailVerified: true },
+      { emailVerified: true }
     );
 
     await this.emailVerifyModel.deleteOne({ token: emailVerificationToken });
@@ -114,7 +114,7 @@ export class AuthService {
     return ResponseHandler.success(
       [],
       successMessages.EMAIL_VERIFIED,
-      HttpStatus.OK,
+      HttpStatus.OK
     );
   }
 
@@ -126,7 +126,7 @@ export class AuthService {
   async login(loginDto: UserLoginDto): LoginResponse {
     const user = await this.userService.getUser(
       { email: loginDto.email },
-      true,
+      true
     );
     if (!user) {
       throw new NotFoundException(errorMessages.USER_NOT_FOUND);
@@ -159,7 +159,7 @@ export class AuthService {
         accessToken,
       },
       successMessages.USER_LOGGED_IN,
-      HttpStatus.OK,
+      HttpStatus.OK
     );
   }
 
@@ -169,7 +169,7 @@ export class AuthService {
    * @returns Common success | error response
    */
   async forgotPassword(
-    forgotPasswordDto: ForgotPasswordDto,
+    forgotPasswordDto: ForgotPasswordDto
   ): OnlyMessageResponse {
     const user = await this.userService.getUser({
       email: forgotPasswordDto.email,
@@ -201,7 +201,7 @@ export class AuthService {
     return ResponseHandler.success(
       [],
       successMessages.FORGOT_PASSWORD,
-      HttpStatus.OK,
+      HttpStatus.OK
     );
   }
 
@@ -222,9 +222,9 @@ export class AuthService {
       { _id: idToken.userId },
       {
         password: await this.commonService.hashPassword(
-          resetPasswordDto.password,
+          resetPasswordDto.password
         ),
-      },
+      }
     );
 
     await this.resetPasswordTokenModel.deleteOne({
@@ -234,7 +234,7 @@ export class AuthService {
     return ResponseHandler.success(
       [],
       successMessages.PASSWORD_RESET,
-      HttpStatus.OK,
+      HttpStatus.OK
     );
   }
 
@@ -244,7 +244,7 @@ export class AuthService {
    * @returns Email Verify Token Document
    */
   async createEmailVerifyToken(
-    idTokenData: Partial<EmailVerifyDocument>,
+    idTokenData: Partial<EmailVerifyDocument>
   ): Promise<EmailVerifyDocument> {
     return this.emailVerifyModel.create(idTokenData);
   }
@@ -255,7 +255,7 @@ export class AuthService {
    * @returns Email Verify Token  document
    */
   async getEmailVerifyToken(
-    query: Partial<FilterQuery<EmailVerifyDocument>>,
+    query: Partial<FilterQuery<EmailVerifyDocument>>
   ): Promise<EmailVerifyDocument> {
     return this.emailVerifyModel.findOne(query);
   }
@@ -266,7 +266,7 @@ export class AuthService {
    * @returns Reset Password Token Document
    */
   async createResetPasswordToken(
-    idTokenData: Partial<ForgotPasswordDocument>,
+    idTokenData: Partial<ForgotPasswordDocument>
   ): Promise<ForgotPasswordDocument> {
     return this.resetPasswordTokenModel.create(idTokenData);
   }
@@ -277,7 +277,7 @@ export class AuthService {
    * @returns Reset Password Token  document
    */
   async getResetPasswordToken(
-    query: Partial<FilterQuery<ForgotPasswordDocument>>,
+    query: Partial<FilterQuery<ForgotPasswordDocument>>
   ): Promise<ForgotPasswordDocument> {
     return this.resetPasswordTokenModel.findOne(query);
   }

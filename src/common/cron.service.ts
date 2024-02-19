@@ -1,11 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { glob } from 'glob';
 import { stat, unlink } from 'fs/promises';
+import { glob } from 'glob';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 /**
- * Description - This service will check the log files every 24 hours if the file is older then one month then delete that file
+ * Description - This service will check the log files every 24 hours
+ * if the file is older then one month then delete that file
  */
 @Injectable()
 export class LogCleanerService {

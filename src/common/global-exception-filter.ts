@@ -34,14 +34,14 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     this.logger.error(
-      `Error: method: ${request.method} - url :${request.url} - error : ${exception.stack}`,
+      `Error: method: ${request.method} - url :${request.url} - error : ${exception.stack}`
     );
     if (exception instanceof HttpException) {
       const statusCode = exception.getStatus();
       return response
         .status(statusCode)
         .json(
-          ResponseHandler.error(exception.name, exception.message, statusCode),
+          ResponseHandler.error(exception.name, exception.message, statusCode)
         );
     }
     return response
@@ -50,8 +50,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         ResponseHandler.error(
           exception.name,
           exception.message,
-          HttpStatus.BAD_REQUEST,
-        ),
+          HttpStatus.BAD_REQUEST
+        )
       );
   }
 }

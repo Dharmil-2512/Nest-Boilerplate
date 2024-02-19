@@ -4,9 +4,9 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { Observable, map } from 'rxjs';
 import { Response } from 'express';
-import { CommonResponse } from '../types';
+import { Observable, map } from 'rxjs';
+import { ICommonResponse } from '../types';
 
 /**
  * Description - Response Interceptor provider
@@ -21,17 +21,17 @@ export class ResponseInterceptorService implements NestInterceptor {
    */
   intercept(
     context: ExecutionContext,
-    next: CallHandler<any>,
+    next: CallHandler<any>
   ): Observable<any> | Promise<Observable<any>> {
     const response = context.switchToHttp().getResponse<Response>();
 
     return next.handle().pipe(
-      map((sentResponse: CommonResponse<any>) => {
+      map((sentResponse: ICommonResponse<any>) => {
         if (sentResponse?.status) {
           response.status(sentResponse.statusCode);
         }
         return sentResponse;
-      }),
+      })
     );
   }
 }
