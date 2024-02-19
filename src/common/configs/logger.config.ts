@@ -20,7 +20,7 @@ export const winstonOptions = (): WinstonModuleOptions => {
     level: 'debug',
     format: winston.format.combine(
       winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-      winston.format.json(),
+      winston.format.json()
     ),
     transports: [
       new winston.transports.File({
@@ -40,7 +40,7 @@ export const winstonOptions = (): WinstonModuleOptions => {
           utilities.format.nestLike('Tavelio', {
             colors: true,
             prettyPrint: false,
-          }),
+          })
         ),
       }),
     ],

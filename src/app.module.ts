@@ -87,12 +87,12 @@ import { UserModule } from './user/user.module';
       useValue: new ValidationPipe({
         whitelist: true,
         exceptionFactory: (
-          validationErrors: ValidationError[] = [],
+          validationErrors: ValidationError[] = []
         ): BadRequestException => {
           const errorKey = Object.keys(validationErrors[0].constraints)[0];
           return new BadRequestException(
             validationErrors[0].constraints[`${errorKey}`] ||
-            errorMessages.UNEXPECTED_ERROR,
+              errorMessages.UNEXPECTED_ERROR
           );
         },
       }),
@@ -100,7 +100,6 @@ import { UserModule } from './user/user.module';
     LogCleanerService,
   ],
 })
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer

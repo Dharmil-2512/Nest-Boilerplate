@@ -60,7 +60,7 @@ export class CommonService {
    */
   public async comparePassword(
     password: string,
-    userPassword: string,
+    userPassword: string
   ): Promise<boolean> {
     return compare(userPassword, password);
   }

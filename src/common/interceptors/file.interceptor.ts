@@ -12,7 +12,7 @@ export const fileInterceptor = FileFieldsInterceptor(
     fileFilter: (
       req: Request,
       file: Express.Multer.File,
-      cb: FileFilterCallback,
+      cb: FileFilterCallback
     ) => {
       const mimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
       if (mimeTypes.includes(file.mimetype)) cb(null, true);
@@ -21,5 +21,5 @@ export const fileInterceptor = FileFieldsInterceptor(
       }
     },
     limits: { fileSize: 10000000 },
-  },
+  }
 );

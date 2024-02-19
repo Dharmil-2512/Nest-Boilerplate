@@ -12,7 +12,7 @@ export class LoggerMiddleware implements NestMiddleware {
    * @param logger
    */
   constructor(
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger
   ) {}
 
   /**
@@ -31,7 +31,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
       this.logger.info(
         `${method} ${originalUrl} ${statusCode} ${contentLength} - ${userAgent} ${ip}`,
-        LoggerMiddleware.name,
+        LoggerMiddleware.name
       );
     });
     next();
