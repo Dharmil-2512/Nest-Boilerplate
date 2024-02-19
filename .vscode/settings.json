@@ -7,6 +7,7 @@
     "source.fixAll.format": "explicit",
     "source.organizeImports": "explicit"
   },
+
   "workbench.colorCustomizations": {
     "activityBar.background": "#1C2341",
     "activityBar.activeBorder": "#506C9F",
