@@ -27,5 +27,6 @@
     "statusBarItem.remoteBackground": "#1C2341",
     "statusBarItem.remoteForeground": "#FFFFFF"
   },
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "conventionalCommits.scopes": ["aws-s3-presign-url"]
 }
