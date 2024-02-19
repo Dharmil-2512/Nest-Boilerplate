@@ -92,7 +92,7 @@ import { UserModule } from './user/user.module';
           const errorKey = Object.keys(validationErrors[0].constraints)[0];
           return new BadRequestException(
             validationErrors[0].constraints[`${errorKey}`] ||
-            errorMessages.UNEXPECTED_ERROR
+              errorMessages.UNEXPECTED_ERROR
           );
         },
       }),

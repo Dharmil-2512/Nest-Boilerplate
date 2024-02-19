@@ -33,7 +33,7 @@ export interface IJwtTokenPayload {
   email: string;
 }
 
-export interface CommonFiles {
+export interface ICommonFiles {
   file: {
     fieldname: string;
     originalname: string;
@@ -44,7 +44,7 @@ export interface CommonFiles {
   }[];
 }
 
-export interface FileData {
+export interface IFileData {
   fieldname: string;
   originalname: string;
   encoding: string;
@@ -64,7 +64,7 @@ export interface FileData {
   versionId: undefined;
 }
 
-export interface UploadedFileData {
+export interface IUploadedFileData {
   file: string;
 }
-export type UploadFileResponse = CommonResponse<UploadedFileData>;
+export type UploadFileResponse = ICommonResponse<IUploadedFileData>;

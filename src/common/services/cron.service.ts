@@ -10,7 +10,7 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
  */
 @Injectable()
 export class LogCleanerService {
-  constructor(@Inject(WINSTON_MODULE_PROVIDER) private logger: Logger) { }
+  constructor(@Inject(WINSTON_MODULE_PROVIDER) private logger: Logger) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_11PM) // Set the cron expression for every day at 3 AM
   async cleanupOldLogs(): Promise<void> {

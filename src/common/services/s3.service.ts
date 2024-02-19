@@ -9,7 +9,7 @@ import { extname } from 'path';
 import { ResponseHandler } from '../../utils/response-handler';
 import { CommonService } from '../common.service';
 import { successMessages } from '../configs/messages.config';
-import { CommonFiles, UploadFileResponse } from '../types';
+import { ICommonFiles, UploadFileResponse } from '../types';
 
 @Injectable()
 export class S3Service implements OnModuleInit {
@@ -18,8 +18,8 @@ export class S3Service implements OnModuleInit {
   public s3Url: string;
   constructor(
     private readonly configService: ConfigService,
-    private readonly commonService: CommonService,
-  ) {}
+    private readonly commonService: CommonService
+  ) { }
   onModuleInit(): void {
     this.s3 = new S3Client({
       region: this.configService.get<string>('AWS_REGION'),
@@ -37,14 +37,14 @@ export class S3Service implements OnModuleInit {
    * @param file FileType
    * @returns UploadFileResponse
    */
-  async uploadFile(file: CommonFiles): Promise<UploadFileResponse> {
+  async uploadFile(file: ICommonFiles): Promise<UploadFileResponse> {
     const fileUrl = await this.uploadFilesToS3(file);
     return ResponseHandler.success(
       {
         file: fileUrl,
       },
       successMessages.IMAGE_UPLOADED,
-      HttpStatus.OK,
+      HttpStatus.OK
     );
   }
 
@@ -53,7 +53,7 @@ export class S3Service implements OnModuleInit {
    * @param file
    * @returns
    */
-  async uploadFilesToS3(file: CommonFiles): Promise<string> {
+  async uploadFilesToS3(file: ICommonFiles): Promise<string> {
     const files = file.file[0];
     const randomId = this.commonService.generateToken(4);
     const extension = extname(files.originalname.toLowerCase()).substring(1);
