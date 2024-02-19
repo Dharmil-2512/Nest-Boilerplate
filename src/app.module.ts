@@ -20,9 +20,9 @@ import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { winstonOptions } from './common/configs/logger.config';
 import { errorMessages } from './common/configs/messages.config';
-import { LogCleanerService } from './common/cron.service';
 import { GlobalExceptionFilter } from './common/global-exception-filter';
 import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
+import { LogCleanerService } from './common/services/cron.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UserModule } from './user/user.module';
 
