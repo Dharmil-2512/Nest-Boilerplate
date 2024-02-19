@@ -67,4 +67,34 @@ export interface FileData {
 export interface UploadedFileData {
   file: string;
 }
+
 export type UploadFileResponse = CommonResponse<UploadedFileData>;
+
+export interface ExtensionObject {
+  field: string;
+  extensionType: string;
+  fileName?: string;
+}
+
+export enum UploadMediaType {
+  IMAGE = 'image',
+  VIDEO = 'video',
+}
+
+export enum MediaPrefix {
+  PROFILE = 'profile',
+}
+
+export const supportedImageExtensions: string[] = [
+  '.jpg',
+  '.jpeg',
+  '.png',
+  '.gif',
+  '.bmp',
+  '.webp',
+];
+
+export interface S3UrlObject {
+  resultResponse: object;
+  updateDetails: object;
+}

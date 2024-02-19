@@ -3,13 +3,23 @@ import {
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { HttpStatus, Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Types } from 'mongoose';
 import { extname } from 'path';
 import { ResponseHandler } from '../../utils/response-handler';
 import { CommonService } from '../common.service';
 import { successMessages } from '../configs/messages.config';
-import { CommonFiles, UploadFileResponse } from '../types';
+import {
+  CommonFiles,
+  ExtensionObject,
+  MediaPrefix,
+  S3UrlObject,
+  UploadFileResponse,
+  UploadMediaType,
+  supportedImageExtensions,
+} from '../types';
 
 @Injectable()
 export class S3Service implements OnModuleInit {
@@ -80,5 +90,57 @@ export class S3Service implements OnModuleInit {
     });
     const deleteResult = await this.s3.send(deleteObj);
     return deleteResult;
+  }
+
+  /**
+   * Description - Common function to generate preSign urls and dbKey of s3
+   * @param id Types.ObjectId
+   * @param mediaFiles ExtensionObject[]
+   * @param mediaPrefix MediaPrefix
+   * @returns Promise<S3UrlObject>
+   */
+  async generatePreSignUrl(
+    id: Types.ObjectId,
+    mediaFiles: ExtensionObject[],
+    mediaPrefix: MediaPrefix,
+  ): Promise<S3UrlObject> {
+    const updateDetails = {};
+    const resultResponse = {};
+
+    await Promise.all(
+      mediaFiles.map(async (data) => {
+        const mediaType = supportedImageExtensions.includes(data.extensionType)
+          ? UploadMediaType.IMAGE
+          : UploadMediaType.VIDEO;
+
+        const fileName = this.commonService.generateFileName(
+          data.extensionType,
+          data.fileName,
+          data.field,
+        );
+
+        // create path to save in db.
+        const dbKey = `${String(id)}/${mediaPrefix}/${mediaType}/${fileName}`;
+
+        resultResponse[`${data.field}`] = await this.getPreSignUrl(dbKey);
+
+        updateDetails[`${data.field}`] = `${dbKey}/${fileName}`;
+      }),
+    );
+
+    return { resultResponse, updateDetails };
+  }
+
+  /**
+   * Description - Function to get signed url from s3
+   * @param objectKey string
+   * @returns Promise<string>
+   */
+  public async getPreSignUrl(objectKey: string): Promise<string> {
+    const command = new PutObjectCommand({
+      Bucket: this.s3BucketName,
+      Key: objectKey,
+    });
+    return getSignedUrl(this.s3, command, { expiresIn: 360000 });
   }
 }
