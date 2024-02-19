@@ -11,7 +11,7 @@ import { UserQueryObject } from './types';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
   ) {}
 
   /**
@@ -20,7 +20,7 @@ export class UserService {
    * @returns User
    */
   async createUser(
-    userData: Partial<CreateUserDto>,
+    userData: Partial<CreateUserDto>
   ): Promise<Partial<UserDocument>> {
     return this.userModel.create(userData);
   }
@@ -32,7 +32,7 @@ export class UserService {
    */
   async getUser(
     query: UserQueryObject,
-    shouldGetPassword = false,
+    shouldGetPassword = false
   ): Promise<UserDocument> {
     const queryBuilder = this.userModel.findOne(query);
     return shouldGetPassword
@@ -47,7 +47,7 @@ export class UserService {
    */
   async getUserJson(
     query: UserQueryObject,
-    select: object = {},
+    select: object = {}
   ): Promise<UserDocument> {
     return this.userModel.findOne(query, select).lean();
   }
@@ -60,7 +60,7 @@ export class UserService {
    */
   async updateUser(
     filterQuery: UserQueryObject,
-    updateQuery: Partial<UpdateQuery<UserDocument>>,
+    updateQuery: Partial<UpdateQuery<UserDocument>>
   ): Promise<UpdateWriteOpResult> {
     return this.userModel.updateOne(filterQuery, updateQuery, { new: true });
   }

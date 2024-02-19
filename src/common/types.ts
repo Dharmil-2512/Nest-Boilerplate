@@ -1,4 +1,4 @@
-export interface CommonResponse<T = any> {
+export interface ICommonResponse<T = any> {
   status: boolean;
   statusCode: number;
   message: string | string[];
@@ -6,9 +6,9 @@ export interface CommonResponse<T = any> {
   error: T | [];
 }
 
-export type OnlyMessageResponse = Promise<CommonResponse>;
+export type OnlyMessageResponse = Promise<ICommonResponse>;
 
-export interface CommonMailResponse {
+export interface ICommonMailResponse {
   accepted?: string[];
   rejected?: [];
   messageTime?: number;
@@ -16,7 +16,7 @@ export interface CommonMailResponse {
   response?: string;
 }
 
-export interface EmailData {
+export interface IEmailData {
   email?: string;
   password?: string;
   name?: string;
@@ -28,12 +28,12 @@ export interface EmailData {
   redirectUrl?: string;
 }
 
-export interface JwtTokenPayload {
+export interface IJwtTokenPayload {
   _id: string;
   email: string;
 }
 
-export interface CommonFiles {
+export interface ICommonFiles {
   file: {
     fieldname: string;
     originalname: string;
@@ -44,7 +44,7 @@ export interface CommonFiles {
   }[];
 }
 
-export interface FileData {
+export interface IFileData {
   fieldname: string;
   originalname: string;
   encoding: string;
@@ -64,37 +64,7 @@ export interface FileData {
   versionId: undefined;
 }
 
-export interface UploadedFileData {
+export interface IUploadedFileData {
   file: string;
 }
-
-export type UploadFileResponse = CommonResponse<UploadedFileData>;
-
-export interface ExtensionObject {
-  field: string;
-  extensionType: string;
-  fileName?: string;
-}
-
-export enum UploadMediaType {
-  IMAGE = 'image',
-  VIDEO = 'video',
-}
-
-export enum MediaPrefix {
-  PROFILE = 'profile',
-}
-
-export const supportedImageExtensions: string[] = [
-  '.jpg',
-  '.jpeg',
-  '.png',
-  '.gif',
-  '.bmp',
-  '.webp',
-];
-
-export interface S3UrlObject {
-  resultResponse: object;
-  updateDetails: object;
-}
+export type UploadFileResponse = ICommonResponse<IUploadedFileData>;

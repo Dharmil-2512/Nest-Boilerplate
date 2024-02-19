@@ -11,15 +11,7 @@ import { extname } from 'path';
 import { ResponseHandler } from '../../utils/response-handler';
 import { CommonService } from '../common.service';
 import { successMessages } from '../configs/messages.config';
-import {
-  CommonFiles,
-  ExtensionObject,
-  MediaPrefix,
-  S3UrlObject,
-  UploadFileResponse,
-  UploadMediaType,
-  supportedImageExtensions,
-} from '../types';
+import { ICommonFiles, UploadFileResponse } from '../types';
 
 @Injectable()
 export class S3Service implements OnModuleInit {
@@ -28,7 +20,7 @@ export class S3Service implements OnModuleInit {
   public s3Url: string;
   constructor(
     private readonly configService: ConfigService,
-    private readonly commonService: CommonService,
+    private readonly commonService: CommonService
   ) {}
   onModuleInit(): void {
     this.s3 = new S3Client({
@@ -47,14 +39,14 @@ export class S3Service implements OnModuleInit {
    * @param file FileType
    * @returns UploadFileResponse
    */
-  async uploadFile(file: CommonFiles): Promise<UploadFileResponse> {
+  async uploadFile(file: ICommonFiles): Promise<UploadFileResponse> {
     const fileUrl = await this.uploadFilesToS3(file);
     return ResponseHandler.success(
       {
         file: fileUrl,
       },
       successMessages.IMAGE_UPLOADED,
-      HttpStatus.OK,
+      HttpStatus.OK
     );
   }
 
@@ -63,7 +55,7 @@ export class S3Service implements OnModuleInit {
    * @param file
    * @returns
    */
-  async uploadFilesToS3(file: CommonFiles): Promise<string> {
+  async uploadFilesToS3(file: ICommonFiles): Promise<string> {
     const files = file.file[0];
     const randomId = this.commonService.generateToken(4);
     const extension = extname(files.originalname.toLowerCase()).substring(1);
@@ -102,7 +94,7 @@ export class S3Service implements OnModuleInit {
   async generatePreSignUrl(
     id: Types.ObjectId,
     mediaFiles: ExtensionObject[],
-    mediaPrefix: MediaPrefix,
+    mediaPrefix: MediaPrefix
   ): Promise<S3UrlObject> {
     const updateDetails = {};
     const resultResponse = {};
@@ -116,7 +108,7 @@ export class S3Service implements OnModuleInit {
         const fileName = this.commonService.generateFileName(
           data.extensionType,
           data.fileName,
-          data.field,
+          data.field
         );
 
         // create path to save in db.
@@ -125,7 +117,7 @@ export class S3Service implements OnModuleInit {
         resultResponse[`${data.field}`] = await this.getPreSignUrl(dbKey);
 
         updateDetails[`${data.field}`] = `${dbKey}/${fileName}`;
-      }),
+      })
     );
 
     return { resultResponse, updateDetails };

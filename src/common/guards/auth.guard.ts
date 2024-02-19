@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { UserService } from '../../user/user.service';
 import { errorMessages } from '../configs/messages.config';
-import { JwtTokenPayload } from '../types';
+import { IJwtTokenPayload } from '../types';
 
 /**
  * Description - Auth Guard
@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
-    private configService: ConfigService,
+    private configService: ConfigService
   ) {}
 
   /**
@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException(errorMessages.INVALID_TOKEN);
     }
 
-    const payload: JwtTokenPayload = await this.jwtService.verifyAsync(token, {
+    const payload: IJwtTokenPayload = await this.jwtService.verifyAsync(token, {
       secret: this.configService.get<string>('SECRET_KEY'),
     });
 
