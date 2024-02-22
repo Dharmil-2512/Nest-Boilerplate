@@ -1,4 +1,10 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { ResponseHandler } from '../utils/response-handler';
 
@@ -7,8 +13,6 @@ import { ResponseHandler } from '../utils/response-handler';
  */
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
-  constructor() {}
-
   /**
    * Description - Catch Exception And Return Common Error Response
    * @param exception
@@ -21,10 +25,20 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof HttpException) {
       const statusCode = exception.getStatus();
-      return response.status(statusCode).json(ResponseHandler.error(exception.name, exception.message, statusCode));
+      return response
+        .status(statusCode)
+        .json(
+          ResponseHandler.error(exception.name, exception.message, statusCode)
+        );
     }
     return response
       .status(HttpStatus.BAD_REQUEST)
-      .json(ResponseHandler.error(exception.name, exception.message, HttpStatus.BAD_REQUEST));
+      .json(
+        ResponseHandler.error(
+          exception.name,
+          exception.message,
+          HttpStatus.BAD_REQUEST
+        )
+      );
   }
 }

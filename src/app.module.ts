@@ -1,4 +1,9 @@
-import { BadRequestException, Module, ValidationError, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  Module,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
 import { GlobalExceptionFilter } from './common/global-exception-filter';
@@ -6,7 +11,12 @@ import { errorMessages } from './common/configs/messages.config';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV}` })],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+    }),
+  ],
   controllers: [],
   providers: [
     {
@@ -21,10 +31,13 @@ import { ConfigModule } from '@nestjs/config';
       provide: APP_PIPE,
       useValue: new ValidationPipe({
         whitelist: true,
-        exceptionFactory: (validationErrors: ValidationError[] = []): BadRequestException => {
+        exceptionFactory: (
+          validationErrors: ValidationError[] = []
+        ): BadRequestException => {
           const errorKey = Object.keys(validationErrors[0].constraints)[0];
           return new BadRequestException(
-            validationErrors[0].constraints[`${errorKey}`] || errorMessages.UNEXPECTED_ERROR,
+            validationErrors[0].constraints[`${errorKey}`] ||
+              errorMessages.UNEXPECTED_ERROR
           );
         },
       }),
