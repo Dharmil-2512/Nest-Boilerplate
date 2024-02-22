@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "lint:report": "eslint --config .eslintrc.js . --format html --output-file report/lint.html"
+    "lint:report": "eslint --config .eslintrc.js . --format html --output-file report/lint.html",
+    "pre-commit": "npx lint-staged && npm run pre-commit"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",
@@ -33,6 +34,8 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",

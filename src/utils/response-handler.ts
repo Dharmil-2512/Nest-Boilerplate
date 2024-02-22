@@ -15,7 +15,7 @@ export class ResponseHandler {
     data: T,
     message: string | string[],
     statusCode: number
-  ): ICommonResponse<T> {
+  ): any {
     return {
       status: true,
       statusCode,
