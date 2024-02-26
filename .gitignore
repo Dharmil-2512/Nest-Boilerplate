@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /node_modules
+/package-lock.json
 
 # Environment
 .env.*
@@ -37,5 +38,13 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+<<<<<<< HEAD
 # compodoc dependency
 /documentation
+=======
+#Eslint Report
+/report
+
+#Package Json Lock
+/package-lock.json
+>>>>>>> deb600e1af4552c726463ca823449723a2245317

@@ -1,4 +1,4 @@
-export interface CommonResponse<T = any> {
+export interface ICommonResponse<T = any> {
   status: boolean;
   statusCode: number;
   message: string | string[];

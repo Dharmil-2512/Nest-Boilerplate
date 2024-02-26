@@ -1,12 +1,11 @@
 {
-  "prettier.tabWidth": 4,
-  "prettier.printWidth": 120,
-  "prettier.endOfLine": "auto",
-  "prettier.semi": true,
-  "editor.tabSize": 4,
-  "editor.fontSize": 14,
   "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.productIconTheme": "material-product-icons"
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.format": true,
+    "source.organizeImports": true
+  },
+  "files.eol": "\n"
 }

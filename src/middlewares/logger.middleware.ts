@@ -11,7 +11,9 @@ export class LoggerMiddleware implements NestMiddleware {
    * Description - Logger Middleware Dependencies
    * @param logger
    */
-  constructor(@Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger) {}
+  constructor(
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger
+  ) {}
 
   /**
    * Description - Log Necessary Things From Request And Response
@@ -29,7 +31,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
       this.logger.info(
         `${method} ${originalUrl} ${statusCode} ${contentLength} - ${userAgent} ${ip}`,
-        LoggerMiddleware.name,
+        LoggerMiddleware.name
       );
     });
     next();
