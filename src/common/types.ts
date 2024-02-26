@@ -5,3 +5,20 @@ export interface ICommonResponse<T = any> {
   data: T | [];
   error: T | [];
 }
+
+export interface ICommonFiles {
+  file: {
+    fieldname: string;
+    originalname: string;
+    encoding: string;
+    mimetype: string;
+    buffer: Buffer;
+    size: number;
+  }[];
+}
+
+export interface IUploadedFileData {
+  file: string;
+}
+
+export type UploadFileResponse = ICommonResponse<IUploadedFileData>;
