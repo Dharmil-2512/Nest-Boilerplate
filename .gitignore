@@ -46,4 +46,6 @@ documentation
 #Eslint Report
 /report
 
+#Package Json Lock
+/package-lock.json
 
