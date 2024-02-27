@@ -21,14 +21,19 @@
     "lint:report": "eslint --config .eslintrc.js . --format html --output-file report/lint.html"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.521.0",
+    "@aws-sdk/s3-request-presigner": "^3.521.0",
     "@nestjs/common": "^10.3.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.3.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@types/bcrypt": "^5.0.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "luxon": "^3.4.4",
+    "mongoose": "^8.2.0",
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.1"
   },
