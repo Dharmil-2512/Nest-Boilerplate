@@ -1,6 +1,8 @@
 # compiled output
 /dist
 /node_modules
+/package-lock.json
+
 
 
 # Environment
@@ -40,3 +42,8 @@ lerna-debug.log*
 
 # compodoc dependency
 documentation
+
+#Eslint Report
+/report
+
+

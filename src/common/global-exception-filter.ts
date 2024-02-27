@@ -8,8 +8,8 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { ResponseHandler } from '../utils/response-handler';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { ResponseHandler } from '../utils/response-handler';
 
 /**
  * Global Exception Filter
