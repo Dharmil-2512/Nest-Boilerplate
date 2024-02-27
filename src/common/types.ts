@@ -68,3 +68,32 @@ export interface IUploadedFileData {
   file: string;
 }
 export type UploadFileResponse = ICommonResponse<IUploadedFileData>;
+
+export interface IExtensionObject {
+  field: string;
+  extensionType: string;
+  fileName?: string;
+}
+
+export enum UploadMediaType {
+  IMAGE = 'image',
+  VIDEO = 'video',
+}
+
+export enum MediaPrefix {
+  PROFILE = 'profile',
+}
+
+export const supportedImageExtensions: string[] = [
+  '.jpg',
+  '.jpeg',
+  '.png',
+  '.gif',
+  '.bmp',
+  '.webp',
+];
+
+export interface IS3UrlObject {
+  resultResponse: object;
+  updateDetails: object;
+}

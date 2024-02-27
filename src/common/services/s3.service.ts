@@ -11,7 +11,15 @@ import { extname } from 'path';
 import { ResponseHandler } from '../../utils/response-handler';
 import { CommonService } from '../common.service';
 import { successMessages } from '../configs/messages.config';
-import { ICommonFiles, UploadFileResponse } from '../types';
+import {
+  ICommonFiles,
+  IExtensionObject,
+  IS3UrlObject,
+  MediaPrefix,
+  UploadFileResponse,
+  UploadMediaType,
+  supportedImageExtensions,
+} from '../types';
 
 @Injectable()
 export class S3Service implements OnModuleInit {
@@ -93,9 +101,9 @@ export class S3Service implements OnModuleInit {
    */
   async generatePreSignUrl(
     id: Types.ObjectId,
-    mediaFiles: ExtensionObject[],
+    mediaFiles: IExtensionObject[],
     mediaPrefix: MediaPrefix
-  ): Promise<S3UrlObject> {
+  ): Promise<IS3UrlObject> {
     const updateDetails = {};
     const resultResponse = {};
 
