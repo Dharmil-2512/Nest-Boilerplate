@@ -28,7 +28,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       return response
         .status(statusCode)
         .json(
-          ResponseHandler.error(exception.name, exception.message, statusCode),
+          ResponseHandler.error(exception.name, exception.message, statusCode)
         );
     }
     return response
@@ -37,8 +37,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         ResponseHandler.error(
           exception.name,
           exception.message,
-          HttpStatus.BAD_REQUEST,
-        ),
+          HttpStatus.BAD_REQUEST
+        )
       );
   }
 }

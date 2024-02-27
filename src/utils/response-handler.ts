@@ -14,7 +14,7 @@ export class ResponseHandler {
   public static success<T>(
     data: T,
     message: string | string[],
-    statusCode: number,
+    statusCode: number
   ): ICommonResponse<T> {
     return {
       status: true,
@@ -35,7 +35,7 @@ export class ResponseHandler {
   public static error<T>(
     error: T,
     message: string | string[],
-    statusCode: number,
+    statusCode: number
   ): ICommonResponse<T> {
     return {
       status: false,
