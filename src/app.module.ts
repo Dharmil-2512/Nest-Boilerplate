@@ -2,10 +2,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import {
   BadRequestException,
-  MiddlewareConsumer,
   Module,
-  NestModule,
-  RequestMethod,
   ValidationError,
   ValidationPipe,
 } from '@nestjs/common';
@@ -22,8 +19,6 @@ import { winstonOptions } from './common/configs/logger.config';
 import { errorMessages } from './common/configs/messages.config';
 import { GlobalExceptionFilter } from './common/global-exception-filter';
 import { ResponseInterceptorService } from './common/interceptors/response-interceptor.service';
-import { LogCleanerService } from './common/services/cron.service';
-import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -97,13 +92,6 @@ import { UserModule } from './user/user.module';
         },
       }),
     },
-    LogCleanerService,
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer
-      .apply(LoggerMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
-}
+export class AppModule {}

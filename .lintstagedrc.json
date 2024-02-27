@@ -3,7 +3,5 @@
     "eslint --fix",
     "prettier --config ./.prettierrc --write"
   ],
-  "{src,apps,libs,test}/**/*.json": [
-    "prettier --config ./.prettierrc --write"
-  ]
+  "{src,apps,libs,test}/**/*.json": ["prettier --config ./.prettierrc --write"]
 }

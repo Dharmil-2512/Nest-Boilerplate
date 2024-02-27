@@ -86,10 +86,10 @@ export class CommonService {
   public generateFileName(
     extension: string,
     fileName: string,
-    fieldName: string,
+    fieldName: string
   ): string {
     return `${fieldName}-${this.convertFileNameSpecialCharacterToHyphen(
-      fileName,
+      fileName
     )}-${Date.now() + Math.round(Math.random() * 100)}.${extension}`;
   }
 }
