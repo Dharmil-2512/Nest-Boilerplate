@@ -43,3 +43,6 @@ lerna-debug.log*
 
 #Package Json Lock
 /package-lock.json
+
+# compodoc dependency
+/documentation
