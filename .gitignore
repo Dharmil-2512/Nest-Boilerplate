@@ -50,3 +50,6 @@ documentation
 #Package Json Lock
 /package-lock.json
 
+#Scanner properties
+/sonar-project.properties
+/.scannerwork
