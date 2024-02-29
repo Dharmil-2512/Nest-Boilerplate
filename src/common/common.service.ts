@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { compare, genSalt, hash } from 'bcrypt';
+import { randomInt } from 'crypto';
 import { Defaults } from './configs/default.config';
 
 @Injectable()
@@ -10,12 +11,15 @@ export class CommonService {
    * @returns random string
    */
   public generateToken(length: number): string {
-    let result = '';
-    const char =
+    const charSet =
       '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+
     for (let i = 0; i < length; i++) {
-      result += char.charAt(Math.floor(Math.random() * char.length));
+      const randomIndex = randomInt(0, charSet.length);
+      result += charSet.charAt(randomIndex);
     }
+
     return result;
   }
 

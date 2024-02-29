@@ -7,7 +7,7 @@ export const Defaults = {
   COMBINED_LOG_PATH: 'logs/combined.log',
   PASSWORD_REGEX: /^(?=.*[A-Za-z])(?=.*?\d)(?=.*?[#?!@$%^&*-]).{8,}$/,
   TOKEN_EXPIRY_TIME: 24,
-  FORGOT_PASSWORD_SUBJECT: 'Reset Password Request',
+  FORGOT_PASSWORD_SUBJECT: 'forgot-password',
   REDIRECT_URL_PATH: 'http://localhost:5000/api/auth/reset-password/',
   PASSWORD_CHARS:
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
@@ -16,5 +16,5 @@ export const Defaults = {
   EMAIL_VERIFICATION_TOKEN_EXPIRY: '2m',
   EMAIL_VERIFY_URL: 'https://www.google.com?token=',
   RESET_PASSWORD_URL: 'https://www.google.com?token=',
-  VERIFY_USER_SUBJECT: 'Verify User',
+  VERIFY_USER_SUBJECT: 'verify-user',
 };

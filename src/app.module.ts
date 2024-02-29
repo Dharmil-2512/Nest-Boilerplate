@@ -1,5 +1,4 @@
 import { MailerModule } from '@nestjs-modules/mailer';
-import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import {
   BadRequestException,
   Module,
@@ -8,11 +7,9 @@ import {
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { WinstonModule } from 'nest-winston';
-import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { winstonOptions } from './common/configs/logger.config';
@@ -45,21 +42,6 @@ import { UserModule } from './user/user.module';
             user: configService.get<string>('SMTP_USERNAME'),
             pass: configService.get<string>('SMTP_PASSWORD'),
           },
-        },
-        template: {
-          dir: join(__dirname, '/templates'),
-          adapter: new EjsAdapter(),
-          options: { strict: true },
-        },
-      }),
-    }),
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      global: true,
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('SECRET_KEY'),
-        signOptions: {
-          expiresIn: configService.get<string>('TOKEN_EXPIRATION'),
         },
       }),
     }),
