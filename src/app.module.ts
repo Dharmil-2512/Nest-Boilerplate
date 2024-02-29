@@ -49,11 +49,6 @@ import { UserModule } from './user/user.module';
             pass: configService.get<string>('SMTP_PASSWORD'),
           },
         },
-        // template: {
-        //   dir: join(__dirname, '/templates'),
-        //   adapter: new EjsAdapter(),
-        //   options: { strict: true },
-        // },
       }),
     }),
     AuthModule,

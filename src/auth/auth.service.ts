@@ -77,12 +77,15 @@ export class AuthService {
 
     const redirectUrl = `${Defaults.EMAIL_VERIFY_URL}${emailVerificationToken}`;
 
-    await this.commonMailService.checkEmail({
-      name: `${user.firstName} ${user.lastName}`,
-      email: user.email,
-      subject: Defaults.VERIFY_USER_SUBJECT,
-      redirectUrl,
-    });
+    await this.commonMailService.sendEmailWithTemplate(
+      {
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        subject: Defaults.VERIFY_USER_SUBJECT,
+        redirectUrl,
+      },
+      Defaults.FORGOT_PASSWORD_SUBJECT
+    );
 
     return ResponseHandler.success(
       [],
@@ -191,12 +194,15 @@ export class AuthService {
 
     const redirectUrl = `${Defaults.RESET_PASSWORD_URL}${resetPasswordToken}`;
 
-    await this.commonMailService.checkEmail({
-      name: `${user.firstName} ${user.lastName}`,
-      email: user.email,
-      subject: Defaults.FORGOT_PASSWORD_SUBJECT,
-      redirectUrl,
-    });
+    await this.commonMailService.sendEmailWithTemplate(
+      {
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        subject: Defaults.FORGOT_PASSWORD_SUBJECT,
+        redirectUrl,
+      },
+      Defaults.VERIFY_USER_SUBJECT
+    );
 
     return ResponseHandler.success(
       [],
