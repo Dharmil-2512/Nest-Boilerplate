@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { compare, genSalt, hash } from 'bcrypt';
-import { DateTime, DurationLikeObject } from 'luxon';
+import { randomInt } from 'crypto';
 import { Defaults } from './configs/default.config';
 
 @Injectable()
@@ -11,35 +11,16 @@ export class CommonService {
    * @returns random string
    */
   public generateToken(length: number): string {
-    let result = '';
-    const char =
+    const charSet =
       '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+
     for (let i = 0; i < length; i++) {
-      result += char.charAt(Math.floor(Math.random() * char.length));
+      const randomIndex = randomInt(0, charSet.length);
+      result += charSet.charAt(randomIndex);
     }
+
     return result;
-  }
-
-  public getLocalDateTime(time: number | string): string | number {
-    if (typeof time === 'number') {
-      //if time in seconds
-      if (time.toString().length === 10) {
-        return DateTime.fromSeconds(time).toSeconds();
-      }
-      //if time in milliseconds
-      return DateTime.fromMillis(time).toUTC().toISO();
-    }
-    //if time in iso string
-    return DateTime.fromISO(time).toUTC().toISO();
-  }
-
-  /**
-   * Description - Add time in current time common function
-   * @param durationObject
-   * @returns string value
-   */
-  public addTimeInCurrentTime(durationObject: DurationLikeObject): string {
-    return DateTime.now().plus(durationObject).toUTC().toISO();
   }
 
   /**
@@ -66,17 +47,6 @@ export class CommonService {
   }
 
   /**
-   * Description - Convert special character & extra spaces of filename to hyphen
-   * @param fileName string
-   * @returns string
-   */
-  public convertFileNameSpecialCharacterToHyphen(fileName: string): string {
-    return fileName
-      .replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-')
-      .replace(/^(-)+|(-)+$/g, '');
-  }
-
-  /**
    * Description - function to generate s3 filename
    * @param extension string
    * @param fileName string
@@ -86,10 +56,10 @@ export class CommonService {
   public generateFileName(
     extension: string,
     fileName: string,
-    fieldName: string,
+    fieldName: string
   ): string {
-    return `${fieldName}-${this.convertFileNameSpecialCharacterToHyphen(
-      fileName,
-    )}-${Date.now() + Math.round(Math.random() * 100)}.${extension}`;
+    return `${fieldName}-${fileName}-${
+      Date.now() + Math.round(randomInt(0, 100) * 100)
+    }.${extension}`;
   }
 }

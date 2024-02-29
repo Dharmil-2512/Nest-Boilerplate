@@ -1,17 +1,22 @@
 import {
-    DeleteObjectCommand,
-    PutObjectCommand,
-    S3Client,
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { HttpStatus, Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Types } from 'mongoose';
 import { extname } from 'path';
-import { ResponseHandler } from '../../utils/response-handler';
 import { CommonService } from '../common.service';
-import { successMessages } from '../configs/messages.config';
-import { ExtensionObject, ICommonFiles, MediaPrefix, S3UrlObject, UploadFileResponse, UploadMediaType, supportedImageExtensions } from '../types';
+import {
+  ICommonFiles,
+  IExtensionObject,
+  IS3UrlObject,
+  MediaPrefix,
+  UploadMediaType,
+  supportedImageExtensions,
+} from '../types';
 
 @Injectable()
 export class S3Service implements OnModuleInit {
@@ -32,22 +37,6 @@ export class S3Service implements OnModuleInit {
     });
     this.s3BucketName = this.configService.get<string>('S3_BUCKET_NAME');
     this.s3Url = this.configService.get<string>('S3_URL');
-  }
-
-  /**
-   * Description - Service to upload the file
-   * @param file FileType
-   * @returns UploadFileResponse
-   */
-  async uploadFile(file: ICommonFiles): Promise<UploadFileResponse> {
-    const fileUrl = await this.uploadFilesToS3(file);
-    return ResponseHandler.success(
-      {
-        file: fileUrl,
-      },
-      successMessages.IMAGE_UPLOADED,
-      HttpStatus.OK
-    );
   }
 
   /**
@@ -87,15 +76,15 @@ export class S3Service implements OnModuleInit {
   /**
    * Description - Common function to generate preSign urls and dbKey of s3
    * @param id Types.ObjectId
-   * @param mediaFiles ExtensionObject[]
+   * @param mediaFiles IExtensionObject[]
    * @param mediaPrefix MediaPrefix
-   * @returns Promise<S3UrlObject>
+   * @returns Promise<IS3UrlObject>
    */
   async generatePreSignUrl(
     id: Types.ObjectId,
-    mediaFiles: ExtensionObject[],
+    mediaFiles: IExtensionObject[],
     mediaPrefix: MediaPrefix
-  ): Promise<S3UrlObject> {
+  ): Promise<IS3UrlObject> {
     const updateDetails = {};
     const resultResponse = {};
 

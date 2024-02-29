@@ -69,7 +69,7 @@ export interface IUploadedFileData {
 }
 export type UploadFileResponse = ICommonResponse<IUploadedFileData>;
 
-export interface ExtensionObject {
+export interface IExtensionObject {
   field: string;
   extensionType: string;
   fileName?: string;
@@ -93,7 +93,7 @@ export const supportedImageExtensions: string[] = [
   '.webp',
 ];
 
-export interface S3UrlObject {
+export interface IS3UrlObject {
   resultResponse: object;
   updateDetails: object;
 }
