@@ -4,4 +4,5 @@ export class VerifyEmailDto {
   @IsNotEmpty()
   @IsString()
   token?: string;
+  // add test comment
 }
