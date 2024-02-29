@@ -1,6 +1,8 @@
 # compiled output
 /dist
 /node_modules
+/package-lock.json
+
 
 
 # Environment
@@ -38,8 +40,16 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+
+# compodoc dependency
+documentation
+
 #Eslint Report
 /report
 
 #Package Json Lock
 /package-lock.json
+
+#Scanner properties
+/sonar-project.properties
+/.scannerwork
