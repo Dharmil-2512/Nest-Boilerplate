@@ -1,4 +1,4 @@
-sonar.projectKey=<ENTER_PROJECTKEY
+sonar.projectKey=<ENTER_YOUR_PROJECTKEY>
 sonar.sources=.
 sonar.host.url=http://localhost:9000
 sonar.token=<ENTER_YOUR_TOKEN>
