@@ -52,4 +52,5 @@ documentation
 
 #Scanner properties
 /sonar-project.properties
+/.scannerwork
 package-lock.json
