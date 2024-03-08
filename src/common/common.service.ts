@@ -47,17 +47,6 @@ export class CommonService {
   }
 
   /**
-   * Description - Convert special character & extra spaces of filename to hyphen
-   * @param fileName string
-   * @returns string
-   */
-  public convertFileNameSpecialCharacterToHyphen(fileName: string): string {
-    return fileName
-      .replace(/([~!@#$%^&*()_+=`{}\[\]\|\\:;'<>,.\/? ])+/g, '-')
-      .replace(/^(-)+|(-)+$/g, '');
-  }
-
-  /**
    * Description - function to generate s3 filename
    * @param extension string
    * @param fileName string
@@ -69,8 +58,8 @@ export class CommonService {
     fileName: string,
     fieldName: string
   ): string {
-    return `${fieldName}-${this.convertFileNameSpecialCharacterToHyphen(
-      fileName
-    )}-${Date.now() + Math.round(Math.random() * 100)}.${extension}`;
+    return `${fieldName}-${fileName}-${
+      Date.now() + Math.round(randomInt(0, 100) * 100)
+    }.${extension}`;
   }
 }
