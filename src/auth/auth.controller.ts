@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './dtos/create.user.dto';
 import { VerifyEmailDto } from './dtos/email-verify.dto';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
-import { UserLoginDto } from './dtos/login.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 
 @Controller('auth')
@@ -40,7 +39,7 @@ export class AuthController {
    * @returns User Details with access token
    */
   @Post('login')
-  async login(@Body() loginDto: UserLoginDto): LoginResponse {
+  async login(@Body() loginDto): LoginResponse {
     return this.authService.login(loginDto);
   }
 
